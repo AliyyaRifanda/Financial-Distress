@@ -1,0 +1,283 @@
+SVM KERNEL POLYNOMINAL C = 1 degree 2
+
+# Source code model SVM Prediksi Financial distress perusahaan sektor energi
+# Nama_NIM_Telkom University
+
+## Import library yang diperlukan untuk kebutuhan prediksi
+import pandas as pd #untuk membaca dataset csv dan menampilkannya dalam ben tuk tabel
+from sklearn.metrics import accuracy_score #untuk menghitung nilai akurasi model
+from sklearn.model_selection import cross_val #untuk validasi model
+from sklearn.svm import SVC #untuk klasifikasi data dengan metode SVM
+
+## load dataset penelitian
+filename= "data rasio perusahaan sektor energi.csv"
+df = pd. read_csv(filename)
+df.dropna (axis=0)
+print (df)
+
+## Feature selection (memilih feature/atribut/variabel yang akan menentukan hasil prediksi)
+features = [c for c in df.columns.values if c not in ['Nama_Perusahaan', 'Tahun', 'Distress']]
+
+## Penentuan kolom untuk label pada dataset
+target = 'Distress'
+print("split data")
+
+## Pembagian data Training dan data Testing
+### 100 data training (100 baris data pertama digunakan untuk training terdiri dari 20 perusahaan distress dan non distress)
+train data = dff[:100]
+
+### pemisahan row data objek penelitian atau perusahaan sektor energi
+last_data = df[100:]
+
+### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan sektor energi)
+test data = last_data.sample(n=19)
+X_test = test_data[features]
+y_test = test_data[target]
+
+### Data perusahaan sektor energi yang tidak masuk 10% testing dimasukan ke data training
+merged = last_data.merge(test_data, how='left', indicator=True)
+merged = merged[merged['_merge']=='left_only']
+train_data = pd.concat([train_data, merged], sort=False)
+
+X_train - train_data[features]
+y_train - train_data[target]
+
+## Melihat Jumlah data Training dan data Testing secara keseluruhan
+print("Jumlah Data Train : ",X_train.shape[0])
+print("Jumlah Data Testing : ",X_test. shape[0])
+
+## Melakukan Training data dengan 10-fold cross validation dan mendapat hasil akurasi training
+k_cross_val = 10
+clf = SVC(kernel = 'poly' C = 1, degree=2)
+clf.fit(X_train, y_train)
+train_accuracies = cross_val_score(clf, X_train, y_train, cv=k_cross_val, scoring='accuracy')
+train_accuracy = train_accuracies.mean()
+print("Train Accuracy:", train_accuracy)
+
+## Melakukan Testing data dan mendapatkan hasil akurasi testing
+y_pred = clf.predict(X_test)
+test_accuracy = accuracy_score(y_test, y_pred)
+print("Test Accuracy:", test_accuracy)
+
+## Menampilkan hasil prediksi 10% data Testing
+df = pd.concat([x_test, y_test], axis=1)
+df['Prediction'] = y_pred
+print("Prediction:\n", df)
+
+## Perhitungan matriks hasil prediksi
+from sklearn.metrics import classification_report, confusion_matrix
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+
+SVM KERNEL POLYNOMINAL C = 1 degree 3
+
+# Source code model SVM Prediksi Financial distress perusahaan sektor energi
+# Nama_NIM_Telkom University
+
+## Import library yang diperlukan untuk kebutuhan prediksi
+import pandas as pd #untuk membaca dataset csv dan menampilkannya dalam ben tuk tabel
+from sklearn.metrics import accuracy_score #untuk menghitung nilai akurasi model
+from sklearn.model_selection import cross_val #untuk validasi model
+from sklearn.svm import SVC #untuk klasifikasi data dengan metode SVM
+
+## load dataset penelitian
+filename= "data rasio perusahaan sektor energi.csv"
+df = pd. read_csv(filename)
+df.dropna (axis=0)
+print (df)
+
+## Feature selection (memilih feature/atribut/variabel yang akan menentukan hasil prediksi)
+features = [c for c in df.columns.values if c not in ['Nama_Perusahaan', 'Tahun', 'Distress']]
+
+## Penentuan kolom untuk label pada dataset
+target = 'Distress'
+print("split data")
+
+## Pembagian data Training dan data Testing
+### 100 data training (100 baris data pertama digunakan untuk training terdiri dari 20 perusahaan distress dan non distress)
+train data = dff[:100]
+
+### pemisahan row data objek penelitian atau perusahaan sektor energi
+last_data = df[100:]
+
+### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan sektor energi)
+test data = last_data.sample(n=19)
+X_test = test_data[features]
+y_test = test_data[target]
+
+### Data perusahaan sektor energi yang tidak masuk 10% testing dimasukan ke data training
+merged = last_data.merge(test_data, how='left', indicator=True)
+merged = merged[merged['_merge']=='left_only']
+train_data = pd.concat([train_data, merged], sort=False)
+
+X_train - train_data[features]
+y_train - train_data[target]
+
+## Melihat Jumlah data Training dan data Testing secara keseluruhan
+print("Jumlah Data Train : ",X_train.shape[0])
+print("Jumlah Data Testing : ",X_test. shape[0])
+
+## Melakukan Training data dengan 10-fold cross validation dan mendapat hasil akurasi training
+k_cross_val = 10
+clf = SVC(kernel = 'poly' C = 1, degree=3)
+clf.fit(X_train, y_train)
+train_accuracies = cross_val_score(clf, X_train, y_train, cv=k_cross_val, scoring='accuracy')
+train_accuracy = train_accuracies.mean()
+print("Train Accuracy:", train_accuracy)
+
+## Melakukan Testing data dan mendapatkan hasil akurasi testing
+y_pred = clf.predict(X_test)
+test_accuracy = accuracy_score(y_test, y_pred)
+print("Test Accuracy:", test_accuracy)
+
+## Menampilkan hasil prediksi 10% data Testing
+df = pd.concat([x_test, y_test], axis=1)
+df['Prediction'] = y_pred
+print("Prediction:\n", df)
+
+## Perhitungan matriks hasil prediksi
+from sklearn.metrics import classification_report, confusion_matrix
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+
+SVM KERNEL PLYNOMINAL C = 10 degree 1
+
+# Source code model SVM Prediksi Financial distress perusahaan sektor energi
+# Nama_NIM_Telkom University
+
+## Import library yang diperlukan untuk kebutuhan prediksi
+import pandas as pd #untuk membaca dataset csv dan menampilkannya dalam ben tuk tabel
+from sklearn.metrics import accuracy_score #untuk menghitung nilai akurasi model
+from sklearn.model_selection import cross_val #untuk validasi model
+from sklearn.svm import SVC #untuk klasifikasi data dengan metode SVM
+
+## load dataset penelitian
+filename= "data rasio perusahaan sektor energi.csv"
+df = pd. read_csv(filename)
+df.dropna (axis=0)
+print (df)
+
+## Feature selection (memilih feature/atribut/variabel yang akan menentukan hasil prediksi)
+features = [c for c in df.columns.values if c not in ['Nama_Perusahaan', 'Tahun', 'Distress']]
+
+## Penentuan kolom untuk label pada dataset
+target = 'Distress'
+print("split data")
+
+## Pembagian data Training dan data Testing
+### 100 data training (100 baris data pertama digunakan untuk training terdiri dari 20 perusahaan distress dan non distress)
+train data = dff[:100]
+
+### pemisahan row data objek penelitian atau perusahaan sektor energi
+last_data = df[100:]
+
+### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan sektor energi)
+test data = last_data.sample(n=19)
+X_test = test_data[features]
+y_test = test_data[target]
+
+### Data perusahaan sektor energi yang tidak masuk 10% testing dimasukan ke data training
+merged = last_data.merge(test_data, how='left', indicator=True)
+merged = merged[merged['_merge']=='left_only']
+train_data = pd.concat([train_data, merged], sort=False)
+
+X_train - train_data[features]
+y_train - train_data[target]
+
+## Melihat Jumlah data Training dan data Testing secara keseluruhan
+print("Jumlah Data Train : ",X_train.shape[0])
+print("Jumlah Data Testing : ",X_test. shape[0])
+
+## Melakukan Training data dengan 10-fold cross validation dan mendapat hasil akurasi training
+k_cross_val = 10
+clf = SVC(kernel = 'poly' C = 10, degree=1)
+clf.fit(X_train, y_train)
+train_accuracies = cross_val_score(clf, X_train, y_train, cv=k_cross_val, scoring='accuracy')
+train_accuracy = train_accuracies.mean()
+print("Train Accuracy:", train_accuracy)
+
+## Melakukan Testing data dan mendapatkan hasil akurasi testing
+y_pred = clf.predict(X_test)
+test_accuracy = accuracy_score(y_test, y_pred)
+print("Test Accuracy:", test_accuracy)
+
+## Menampilkan hasil prediksi 10% data Testing
+df = pd.concat([x_test, y_test], axis=1)
+df['Prediction'] = y_pred
+print("Prediction:\n", df)
+
+## Perhitungan matriks hasil prediksi
+from sklearn.metrics import classification_report, confusion_matrix
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+
+SVM KERNEL POLYNOMINAL C = 10 degree 3
+
+# Source code model SVM Prediksi Financial distress perusahaan sektor energi
+# Nama_NIM_Telkom University
+
+## Import library yang diperlukan untuk kebutuhan prediksi
+import pandas as pd #untuk membaca dataset csv dan menampilkannya dalam ben tuk tabel
+from sklearn.metrics import accuracy_score #untuk menghitung nilai akurasi model
+from sklearn.model_selection import cross_val #untuk validasi model
+from sklearn.svm import SVC #untuk klasifikasi data dengan metode SVM
+
+## load dataset penelitian
+filename= "data rasio perusahaan sektor energi.csv"
+df = pd. read_csv(filename)
+df.dropna (axis=0)
+print (df)
+
+## Feature selection (memilih feature/atribut/variabel yang akan menentukan hasil prediksi)
+features = [c for c in df.columns.values if c not in ['Nama_Perusahaan', 'Tahun', 'Distress']]
+
+## Penentuan kolom untuk label pada dataset
+target = 'Distress'
+print("split data")
+
+## Pembagian data Training dan data Testing
+### 100 data training (100 baris data pertama digunakan untuk training terdiri dari 20 perusahaan distress dan non distress)
+train data = dff[:100]
+
+### pemisahan row data objek penelitian atau perusahaan sektor energi
+last_data = df[100:]
+
+### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan sektor energi)
+test data = last_data.sample(n=19)
+X_test = test_data[features]
+y_test = test_data[target]
+
+### Data perusahaan sektor energi yang tidak masuk 10% testing dimasukan ke data training
+merged = last_data.merge(test_data, how='left', indicator=True)
+merged = merged[merged['_merge']=='left_only']
+train_data = pd.concat([train_data, merged], sort=False)
+
+X_train - train_data[features]
+y_train - train_data[target]
+
+## Melihat Jumlah data Training dan data Testing secara keseluruhan
+print("Jumlah Data Train : ",X_train.shape[0])
+print("Jumlah Data Testing : ",X_test. shape[0])
+
+## Melakukan Training data dengan 10-fold cross validation dan mendapat hasil akurasi training
+k_cross_val = 10
+clf = SVC(kernel = 'poly' C = 1, degree=3)
+clf.fit(X_train, y_train)
+train_accuracies = cross_val_score(clf, X_train, y_train, cv=k_cross_val, scoring='accuracy')
+train_accuracy = train_accuracies.mean()
+print("Train Accuracy:", train_accuracy)
+
+## Melakukan Testing data dan mendapatkan hasil akurasi testing
+y_pred = clf.predict(X_test)
+test_accuracy = accuracy_score(y_test, y_pred)
+print("Test Accuracy:", test_accuracy)
+
+## Menampilkan hasil prediksi 10% data Testing
+df = pd.concat([x_test, y_test], axis=1)
+df['Prediction'] = y_pred
+print("Prediction:\n", df)
+
+## Perhitungan matriks hasil prediksi
+from sklearn.metrics import classification_report, confusion_matrix
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
