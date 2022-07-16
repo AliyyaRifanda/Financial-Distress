@@ -68,7 +68,7 @@ print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
 
 SVM KERNEL RBF C=1 gamma=1
-# Source code model KNN Prediksi Financial distress perusahaan pertambangan batubara
+# Source code model KNN Prediksi Financial distress perusahaan sektor energi
 # Nama_NIM_Telkom University
 
 ## Import library yang diperlukan untuk kebutuhan prediksi
@@ -78,7 +78,7 @@ from sklearn.model_selection import cross_val #untuk validasi model
 from sklearn.svm import SVC #untuk klasifikasi data dengan metode SVM
 
 ## load dataset penelitian
-filename= "data rasio perusahaan pertambangan batubara idx.csv"
+filename= "data rasio perusahaan sektor energi.csv"
 df = pd. read_csv(filename)
 df.dropna (axis=0)
 print (df)
@@ -94,15 +94,15 @@ print("split data")
 ### 100 data training (100 baris data pertama digunakan untuk training terdiri dari 20 perusahaan distress dan non distress)
 train data = dff[:100]
 
-### pemisahan row data objek penelitian atau perusahaan subsektor pertambangan batubara
+### pemisahan row data objek penelitian atau perusahaan sektor energi
 last_data = df[100:]
 
-### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan pertambangan batubara)
+### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan sektor energi)
 test data = last_data.sample(n=19)
 X_test = test_data[features]
 y_test = test_data[target]
 
-### Data perusahaan pertambangan batubara yang tidak masuk 10% testing dimasukan ke data training
+### Data perusahaan sektor energi yang tidak masuk 10% testing dimasukan ke data training
 merged = last_data.merge(test_data, how='left', indicator=True)
 merged = merged[merged['_merge']=='left_only']
 train_data = pd.concat([train_data, merged], sort=False)
@@ -138,7 +138,7 @@ print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
 
 SVM KERNEL RBF C=1 gamma=2
-# Source code model KNN Prediksi Financial distress perusahaan pertambangan batubara
+# Source code model KNN Prediksi Financial distress perusahaan sektor energi
 # Nama_NIM_Telkom University
 ## Import library yang diperlukan untuk kebutuhan prediksi
 import pandas as pd #untuk membaca dataset csv dan menampilkannya dalam ben tuk tabel
@@ -147,7 +147,7 @@ from sklearn.model_selection import cross_val #untuk validasi model
 from sklearn.svm import SVC #untuk klasifikasi data dengan metode SVM
 
 ## load dataset penelitian
-filename= "data rasio perusahaan pertambangan batubara idx.csv"
+filename= "data rasio perusahaan sektor energi.csv"
 df = pd. read_csv(filename)
 df.dropna (axis=0)
 print (df)
@@ -163,15 +163,15 @@ print("split data")
 ### 100 data training (100 baris data pertama digunakan untuk training terdiri dari 20 perusahaan distress dan non distress)
 train data = dff[:100]
 
-### pemisahan row data objek penelitian atau perusahaan subsektor pertambangan batubara
+### pemisahan row data objek penelitian atau perusahaan sektor energi
 last_data = df[100:]
 
-### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan pertambangan batubara)
+### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan sektor energi)
 test data = last_data.sample(n=19)
 X_test = test_data[features]
 y_test = test_data[target]
 
-### Data perusahaan pertambangan batubara yang tidak masuk 10% testing dimasukan ke data training
+### Data perusahaan sektor energi yang tidak masuk 10% testing dimasukan ke data training
 merged = last_data.merge(test_data, how='left', indicator=True)
 merged = merged[merged['_merge']=='left_only']
 train_data = pd.concat([train_data, merged], sort=False)
@@ -207,7 +207,7 @@ print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
 
 SVM KERNEL RBF c=10 gamma=0,5
-# Source code model KNN Prediksi Financial distress perusahaan pertambangan batubara
+# Source code model KNN Prediksi Financial distress perusahaan sektor energi
 # Nama_NIM_Telkom University
 ## Import library yang diperlukan untuk kebutuhan prediksi
 import pandas as pd #untuk membaca dataset csv dan menampilkannya dalam ben tuk tabel
@@ -216,7 +216,7 @@ from sklearn.model_selection import cross_val #untuk validasi model
 from sklearn.svm import SVC #untuk klasifikasi data dengan metode SVM
 
 ## load dataset penelitian
-filename= "data rasio perusahaan pertambangan batubara idx.csv"
+filename= "data rasio perusahaan sektor energi.csv"
 df = pd. read_csv(filename)
 df.dropna (axis=0)
 print (df)
@@ -232,15 +232,15 @@ print("split data")
 ### 100 data training (100 baris data pertama digunakan untuk training terdiri dari 20 perusahaan distress dan non distress)
 train data = dff[:100]
 
-### pemisahan row data objek penelitian atau perusahaan subsektor pertambangan batubara
+### pemisahan row data objek penelitian atau perusahaan sektor energi
 last_data = df[100:]
 
-### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan pertambangan batubara)
+### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan sektor energi)
 test data = last_data.sample(n=19)
 X_test = test_data[features]
 y_test = test_data[target]
 
-### Data perusahaan pertambangan batubara yang tidak masuk 10% testing dimasukan ke data training
+### Data perusahaan sektor energi yang tidak masuk 10% testing dimasukan ke data training
 merged = last_data.merge(test_data, how='left', indicator=True)
 merged = merged[merged['_merge']=='left_only']
 train_data = pd.concat([train_data, merged], sort=False)
@@ -276,7 +276,7 @@ print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
 
 SVM KERNEL RBF C=10 gamma 1
-# Source code model KNN Prediksi Financial distress perusahaan pertambangan batubara
+# Source code model KNN Prediksi Financial distress perusahaan sektor energi
 # Nama_NIM_Telkom University
 ## Import library yang diperlukan untuk kebutuhan prediksi
 import pandas as pd #untuk membaca dataset csv dan menampilkannya dalam ben tuk tabel
@@ -285,7 +285,7 @@ from sklearn.model_selection import cross_val #untuk validasi model
 from sklearn.svm import SVC #untuk klasifikasi data dengan metode SVM
 
 ## load dataset penelitian
-filename= "data rasio perusahaan pertambangan batubara idx.csv"
+filename= "data rasio perusahaan sektor energi.csv"
 df = pd. read_csv(filename)
 df.dropna (axis=0)
 print (df)
@@ -301,15 +301,15 @@ print("split data")
 ### 100 data training (100 baris data pertama digunakan untuk training terdiri dari 20 perusahaan distress dan non distress)
 train data = dff[:100]
 
-### pemisahan row data objek penelitian atau perusahaan subsektor pertambangan batubara
+### pemisahan row data objek penelitian atau perusahaan sektor energi
 last_data = df[100:]
 
-### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan pertambangan batubara)
+### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan sektor energi)
 test data = last_data.sample(n=19)
 X_test = test_data[features]
 y_test = test_data[target]
 
-### Data perusahaan pertambangan batubara yang tidak masuk 10% testing dimasukan ke data training
+### Data perusahaan sektor energi yang tidak masuk 10% testing dimasukan ke data training
 merged = last_data.merge(test_data, how='left', indicator=True)
 merged = merged[merged['_merge']=='left_only']
 train_data = pd.concat([train_data, merged], sort=False)
@@ -345,7 +345,7 @@ print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
 
 SVM KERNEL RBF C = 10 gamma = 2
-# Source code model KNN Prediksi Financial distress perusahaan pertambangan batubara
+# Source code model KNN Prediksi Financial distress perusahaan sektor energi
 # Nama_NIM_Telkom University
 ## Import library yang diperlukan untuk kebutuhan prediksi
 import pandas as pd #untuk membaca dataset csv dan menampilkannya dalam ben tuk tabel
@@ -354,7 +354,7 @@ from sklearn.model_selection import cross_val #untuk validasi model
 from sklearn.svm import SVC #untuk klasifikasi data dengan metode SVM
 
 ## load dataset penelitian
-filename= "data rasio perusahaan pertambangan batubara idx.csv"
+filename= "data rasio perusahaan sektor energi.csv"
 df = pd. read_csv(filename)
 df.dropna (axis=0)
 print (df)
@@ -370,15 +370,15 @@ print("split data")
 ### 100 data training (100 baris data pertama digunakan untuk training terdiri dari 20 perusahaan distress dan non distress)
 train data = dff[:100]
 
-### pemisahan row data objek penelitian atau perusahaan subsektor pertambangan batubara
+### pemisahan row data objek penelitian atau perusahaan sektor energi
 last_data = df[100:]
 
-### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan pertambangan batubara)
+### 10% testing data (19 data) diambil dari 90 data terakhir (data perusahaan sektor energi)
 test data = last_data.sample(n=19)
 X_test = test_data[features]
 y_test = test_data[target]
 
-### Data perusahaan pertambangan batubara yang tidak masuk 10% testing dimasukan ke data training
+### Data perusahaan sektor energi yang tidak masuk 10% testing dimasukan ke data training
 merged = last_data.merge(test_data, how='left', indicator=True)
 merged = merged[merged['_merge']=='left_only']
 train_data = pd.concat([train_data, merged], sort=False)
