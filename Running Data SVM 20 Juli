@@ -1,0 +1,17 @@
+##input package dan feature guna memasukkan model SVM
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+from matplotlib import pyplot as plt
+from sklearn import svm
+from sklearn.metrics import r2_score, median_absolute_error
+from sklearn.metrics import mean_squared_error as mse
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.model_selection import ShuffleSplit
+from sklearn.model_selection import cross_val_score, learning_curve, GridSearchCV, train_test_split, learning_curve
+from sklearn.feature_selection import RFECV
+
+##Membaca data
+fdata = pd.read_csv('file name.csv')
+
