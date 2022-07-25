@@ -1,0 +1,200 @@
+##Masukkan perintah untuk memanggil dan mengolah data
+import pandas as pd #proses analisis data
+import numpy as np #membaca dan membuat operasional data vektor
+import matplotlib.plyplot as plt #package visualisasi data plot atau grafik
+import seaborn as sns #Package visualisasi data
+
+##Preprocessing Data (Statistik deskriptif data)
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import Pipeline #transformator data predict
+from sklearn.metrics import r2_score, median_absolute_error 
+from sklearn.metrics import mean_squared_error as mse
+
+##Standarisasi Feature Variabel Rasio KEuangan 
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import roc_curve, auc
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import make_classification
+
+##melatih model untuk regresi dan klasifikasi (estimasi)
+from sklearn.ensemble import GradientBoostingClassifier 
+from sklearn.model_selection import cross_val_score, learning_curve, GridSearchCV, train_test_split, learning_curve #Validasi model
+from sklearn.feature_selection import RFECV #estimator, memilih jumlah fitur yang optimal
+
+##Memanggil Data yang Akan Digunakan 
+data = pd.read_csv('E:/Dataset ALiyya Rifanda 1401164086.csv')
+data.head() #menampilkan 5 baris pertama data
+
+##Jumlah Perusahaan yanga Diteliti (sebanyak 23 perusahaan)
+print(data.Company.unique().shape)
+
+##Melihat informasi data
+data.head()
+data.tail()
+data.describe()
+
+##Data Cleaning
+plt.figure(figsize=(18,10))
+sns.distplot(data['Distress'],kde=False, rug=True, color = 'blue');
+plt.title('Financial Distress ')
+plt.xlabel('Values')
+plt.ylabel('Frequency')
+plt.grid(True)
+plt.show()
+
+##Menampilkan deskriptif statistik data 
+#Hanya kolom yang bertipe numerik yang akan ditampilkan statistiknya.
+data['Financial Distress'].describe()
+
+##Menghapus outliers, angka 100 didapat dari nilai maks
+plt.figure(figsize=(17,8))
+sns.distplot(data[data['Distress'] < 100]['Distress'], kde=False, rug=True, color = 'blue')
+plt.title('Financial Distress Histogram without outlier')
+plt.xlabel('Values')
+plt.ylabel('Frequency')
+plt.grid(True)
+plt.show()
+
+##Data Preparation, Normalisasi Data, Mereduksi nilai pada atribut.
+#Metode yang digunakan adalah dengan memeriksa nilai tetangga kemudian menemukan nilai baru
+pd.qcut(data['Distress'], 3).value_counts()
+
+data['status'] = np.where(data['Distress'] < nT,0,np.where(data['Distress'] < nA, 1,2))
+
+data['status'].value_counts()
+
+##Seleksi Data untuk Modeling
+#Menggunakan sampel tahun terkahir dari setiap perusahaan sebagai pemodelan. 
+ Another holdout dataset for testing will be produced this is for the first period of the companies. We need to check if the last period is representative for every period.
+ Jika tidak demikian, maka tidak akan mendapat informasi terkait data tsbt dan perlu memikirkan proses alternatif lainnya
+ 
+data_one_period = data.drop_duplicates(subset=['Company'], keep='last')
+ 
+data_one_period_test = data.drop_duplicates(subset=['Company'], keep='first')
+data_final_test = data_one_period.drop(['Distress', 'Company'], axis=1)
+data_final_test.head()
+
+data_one_period.shape
+
+##Dari hasil seleksi data dari dataset (data_one_period), didapat (row, column). Dimana distribusi financial distress terlah diubbah ke dalam kolom baru bernama 'status'
+data_one_period['status'].value_counts()
+data_one_period.head()
+
+#kolom yang tidak berpengaruh akan dieleminasi, sehingga akan menghasilkan matriks korelasi
+data_final = data_one_period.drop(['Distress', 'Company'], axis=1)
+data_final.head()
+
+##MEMILIH VARIAABEL DENGAN KOEFISIEN KORELASI
+#Korelasi variabel prediktor terhadap kolomstatus bernilai absolut yang diurutkan dari nilai tertinggi.
+#Menggunakan korelasi >10% , <70%
+plt.figure(figsize=(20,10))
+plt.title('Correlation Matrix')
+sns.heatmap(data_final.corr(), annot=True)
+plt.show()
+
+abs(data_final.corr()['status']).sort_values(ascending=True)
+variables = abs(data_final.corr()['status']).sort_values(ascending=True)
+
+v1 = variables[0.05 < variables.values]
+v2 = v1[v1.values < 0.7] #nilai baru sbg variabel prediktor
+len(v2.index)
+
+ind = v2.index
+v2.index
+
+y = data_final['status']
+X = data_final[ind]
+
+##MENGECEK HUBUNGAN ANTAR VARIABEL PREDIKTOR. VIF akan digunakan sebagai fungsi yang telah terluis untuk membantu dalam menyeleksi variabel.
+def calc_vif(X):
+    
+    vif = pd.DataFrame()
+    vif["variables"] = X.columns
+    vif["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+
+    return(vif)
+    
+vif_df = calc_vif(X)
+vif_df.shape   
+
+vif_df_without_corr = vif_df[vif_df['VIF'] < 10] #nilai cut off 10
+vif_df_without_corr.shape
+
+vif_df_without_corr['variables']
+
+X = X[vif_df_without_corr['variables']]
+X.shape
+
+plt.figure(figsize=(20,10))
+plt.title('Correlation Matrix of the selected predictors')
+sns.heatmap(X.corr(), annot=True)
+plt.show()
+
+##Menentukan hubungan antar variabel yang akan digunakan untuk prediksi financial distress dengan mengabaikan tahun dan perusahaan
+correlation = data.drop(labels= ['Time', 'Company'], axis =1).corr()
+correlation['Distress'].plot()
+
+##Menampilkan Korelasi Feature (Variabel) yang memiliki pengaruh terhadap klasifikasi
+f, ax = plt.subplots(figsize= (25,25))
+sns.barplot(x = correlation['Distress'], y = correlation.index)
+plt.xticks(fontsize = 15)
+plt.yticks(fontsize = 15)
+plt.ylabel('FEATURES', fontsize= 15)
+plt.xlabel('VALUE OF FINANCIAL DISTRESS', fontsize= 15)
+plt.title('FEATURE CORRELATION', fontsize =15)
+
+##MODELING ON THE SELECTED DATA
+X_train, X_test, y_train, y_test = train_test_split(
+     X, y, test_size=0.3, random_state=42)
+     
+#Menulis fungsi evaluasi kinerja model menggunakan akurasi terbaik pada dataset latih dan dataset uji
+#Kesalahan, dan laporan klasifikasi berdasarkan confussion matrix >>presisi, recall, f1-score, dan support
+scaler =  MinMaxScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+def evaluate(model, train_features, train_labels, test_features, test_labels):
+    train_acc = model.score(train_features, train_labels)
+    predictions = model.predict(test_features)
+    rmse = np.sqrt(mean_squared_error(test_labels, predictions))
+    accuracy = accuracy_score(test_labels, predictions)
+    class_report = classification_report(test_labels, predictions)
+    print('Model Performance')
+    print('Training data performance {:0.2f}'.format(train_acc))
+    print('Root Mean Squired Error: {:0.2f}'.format(rmse))
+    print('Test Accuracy: {:0.2f}.'.format(accuracy))
+    print(class_report)
+    
+##APPLYING SVM
+#Support Vector Classifier, dari sekian kernel yang dimiliki tidak memberikan nilai akurasi yang tinggi, sehingga tidak digunakan.
+
+sv_base_rbf = SVC(kernel='rbf').fit(X_train, y_train)
+evaluate(sv_base_rbf,  X_train, y_train, X_test, y_test)
+
+sv_base_sig = SVC(kernel='sigmoid').fit(X_train, y_train)
+evaluate(sv_base_sig,  X_train, y_train, X_test, y_test)
+
+#SVC kernel linear
+sv_base_lin = SVC(kernel='linear').fit(X_train, y_train)
+evaluate(sv_base_lin,  X_train, y_train, X_test, y_test)
+
+##MEMBANGUN MODEL DARI RATA_RATA DATA
+data_average = data.groupby("Company", as_index=False).mean() 
+data_average = data_average.drop(['Time'], axis=1)
+data_average.shape
+
+data_average.head()
+
+time_to_merge = pd.DataFrame(data_one_period[['Company','Time']])
+time_to_merge.head()
+
+data_average_with_time = pd.merge(time_to_merge,data_average, on='Company')
+data_average_with_time.head() #LINE58
+
+
+
+
