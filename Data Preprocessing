@@ -1,0 +1,106 @@
+##DATA COLLECTION
+##DATA PREPROCESSING
+#1_DATA CLEANING
+
+#2_DATA TRANSFORMATION
+
+#Feature Scaaling - Standardization and Normalization
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+#scale from 4th column till the last
+X_train[:,4:] = scaler.fit_transform(X_train[:,4:]) 
+X_test[:,4:] = scaler.fit_transform(X_test[:,4:])
+print(X_train)
+print(X_test)
+
+#3_DATA REDUCTION
+##FEATURE ENGINEERING
+#A_Using Percentile
+data.shape()
+
+data.describe()
+
+min_threshold, max_threshold = data.columnsname.quantile([0.001,0.999]) #percentile threshold menggunakan 1%:99%
+min_threshold, max_threshold
+
+data[data.columnsname<min_threshold] #menampilkan data yang kurang dari min threshold yang mengindikasikan sebagai outliers
+data[data.columnsname>max_threshold] #menampilkan data yang lebih baik dari threshold yang dapat mengindikasikan sebagai outliers
+
+data2 = data[(data.columnsname<max_threshold) & (data.columnsname>min_threshold)] #data baru yang tidak ada outliers
+data2.shape
+
+#B_Using Z-Score and Standard Deviation
+from matplotlib import pyplot as plt
+%matplotlib inline
+matplotlib.rcParams['figure.figzise'] = (10,6)
+
+plt.hist(data.columnsname, bins=20, rwidth=0.8) #menampilkan distribusi data
+plt.xlabel('columnsname')
+plt.ylabel('frequency')
+plt.show()
+
+from scipy.stats import norm
+import numpy as np 
+
+plt.hist(data.columnsname, bins=20, rwidth=0.8, density=True) #menampilkan distribusi data
+plt.xlabel('columnsname')
+plt.ylabel('frequency')
+
+rng = np.arrange(data.columnsname.min(), data.columnsname.max(), 0.1) #menampilkan nilai aktual bell-curve
+plt.plot(rng, norm.pdf(rng,data.columnsname.mean(), data.columnsname.std()))
+
+upper_limit = data.columnsname.mean() + 3*data.columnsname.std()
+upper_limit
+
+lower_limit = data.columnsname.mean() + 3*data.columnsname.std()
+lower_limit
+
+data[(data.columnsname>upper_limit) | (data.columnsname<lowe_limit)] #menampilkan data point yang telah diisikan kriteria yang mengindikasikan outliers
+#diskusikan apakah perlu dihapus atau tidak
+
+data_no_outlier_std_dev = data[(data.columnsname<upper_limit) & (data.columnsname>lowe_limit)] #jika telah disetujui untuk dihapus
+data_no_outlier_std_dev.shape #menampilkan data frame baru
+
+data.shape[0] = data_no_outlier_std_dev.shape[0] #menampilkan jumlah putlier yang telah dihapus
+
+#menghapus outlier menggunakan Z-Score, dimana ZScore mengindikasikan seberapa jauh data dengan mean
+data['zscore'] = (data.columnsname - data.columnsname.mean())/data.columnsname.std() #menambahkan kolom baru dengan nilai zscore yang didapat
+data.head()
+
+data[(data['zscore']<-3)| (data['zscore']>3)] #menampilkan data poin yang memiliki nilai zscore lebih dari 3 dan kurang dari -3
+
+data_no_outliers = data[(data['zscore']>-3)| (data['zscore']<3)] #mempertahankan data baru tanpa outliers
+data_no_outliers.shape
+
+#C_Using IQR. 
+#IQR = Q3-Q1. lower_limit = Q1-1.5*IQR. upper_limit = Q3 + 1.5*IQR
+
+data.describe()
+
+Q1 = data.columnsname.quantile(0.25)
+Q2 = data.columnsname.quantile(0.50)
+Q3 = data.columnsname.quantile(0.75)
+Q1, Q2, Q3
+
+IQR = Q3-Q1
+IQR
+
+lower_limit = Q1 - 1.5*IQR
+upper_limit = Q3 + 1.5*IQR
+lower_limit, upper_limit
+
+data[(data.columnsname<lower_limit) | (data.columnsname>upper_limit)] #menampilkan jumlah outliers
+
+data_no_outliers = data[(data.columnsname>lower_limit) & (data.columnsname<upper_limit)] #create data frame baru tanpa outlier
+
+
+
+
+
+
+
+
+
+##MODELLING
+##OUTPUT DATA ANALYSIS
