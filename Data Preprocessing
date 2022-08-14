@@ -12,7 +12,7 @@ data
 
 #2_DATA TRANSFORMATION
 
-#Feature Scaaling - Standardization and Normalization
+#Feature Scalling - Standardization and Normalization
 from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
